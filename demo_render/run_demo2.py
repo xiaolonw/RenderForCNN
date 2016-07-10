@@ -44,7 +44,7 @@ viewpoint_samples = [[float(x) for x in line.rstrip().split(' ')] for line in op
 v = random.choice(viewpoint_samples)
 print ">> Selected view: ", v
 python_cmd = 'python %s -m %s -a %s -e %s -t %s -d %s -o %s' % (os.path.join(BASE_DIR, 'render_class_view.py'), 
-    '/nfs.yoda/xiaolonw/grasp/dataset/ycb/melissa_doug_farm_fresh_fruit_banana/textured_meshes/optimized_poisson_texture_mapped_mesh.obj',
+    '/nfs.yoda/xiaolonw/grasp/dataset/ycb/melissa_doug_farm_fresh_fruit_banana/textured_meshes/optimized_tsdf_texture_mapped_mesh.obj',
      str(v[0]), str(v[1]), str(v[2]), str(v[3]), os.path.join(syn_images_folder, model_name, image_name))
 print ">> Running rendering command: \n \t %s" % (python_cmd)
 os.system('%s %s' % (python_cmd, io_redirect))
