@@ -37,7 +37,7 @@ image_name = 'demo_img.png'
 if not os.path.exists(syn_images_folder):
     os.mkdir(syn_images_folder)
     os.mkdir(os.path.join(syn_images_folder, model_name))
-viewpoint_samples_file = os.path.join(BASE_DIR, 'sample_viewpoints.txt')
+viewpoint_samples_file = os.path.join(BASE_DIR, 'sample_viewpoints2.txt')
 viewpoint_samples = [[float(x) for x in line.rstrip().split(' ')] for line in open(viewpoint_samples_file,'r')]
 
 # run code
