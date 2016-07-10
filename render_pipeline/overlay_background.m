@@ -24,14 +24,13 @@ fprintf([repmat('.',1,report_num) '\n\n']);
 report_step = floor((image_num+report_num-1)/report_num);
 t_begin = clock;
 
-fprintf('%d\n', image_num); 
 
 for i = 1:image_num
 % parfor(i = 1:image_num, num_workers)
     src_image_file = image_files(i).name;
-    fprintf('%s\n', src_image_file); 
     try
-        [I, ~, alpha] = imread(src_image_file);       
+        [I, ~, alpha] = imread(src_image_file);    
+        fprintf('%s\n', src_image_file);    
     catch
         fprintf('Failed to read %s\n', src_image_file);
     end
