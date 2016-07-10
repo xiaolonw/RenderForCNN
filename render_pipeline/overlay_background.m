@@ -23,8 +23,8 @@ report_num = 80;
 fprintf([repmat('.',1,report_num) '\n\n']);
 report_step = floor((image_num+report_num-1)/report_num);
 t_begin = clock;
-%for i = 1:image_num
-parfor(i = 1:image_num, num_workers)
+for i = 1:image_num
+% parfor(i = 1:image_num, num_workers)
     src_image_file = image_files(i).name;
     try
         [I, ~, alpha] = imread(src_image_file);       
