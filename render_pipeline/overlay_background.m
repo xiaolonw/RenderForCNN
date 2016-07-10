@@ -34,18 +34,12 @@ for i = 1:image_num
         fprintf('Failed to read %s\n', src_image_file);
     end   
     
-    fprintf('%s\n', src_image_file); 
-        
     s = size(I);
     fh = s(1); fw = s(2);
     fprintf('%d %d\n', s(1), s(2)); 
 
-    s2 = size(alpha);
-    fprintf('%d %d\n', s2(1), s2(2)); 
-
-
     mask = double(alpha) / 255;
-    mask = repmat(mask,1,1,3);
+    mask = repmat(mask,[ 1 1 3 ]);
 
     
     if rand() > clutteredBkgRatio
