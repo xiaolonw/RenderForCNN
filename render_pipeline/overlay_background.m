@@ -30,10 +30,10 @@ for i = 1:image_num
     src_image_file = image_files(i).name;
     try
         [I, ~, alpha] = imread(src_image_file);    
-        fprintf('%s\n', src_image_file);    
     catch
         fprintf('Failed to read %s\n', src_image_file);
     end
+    fprintf('%s\n', src_image_file);    
         
     s = size(I);
     fh = s(1); fw = s(2);
