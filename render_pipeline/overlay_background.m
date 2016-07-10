@@ -36,7 +36,7 @@ for i = 1:image_num
     
     s = size(I);
     fh = s(1); fw = s(2);
-    fprintf('%d %d\n', s(1), s(2)); 
+    % fprintf('%d %d\n', s(1), s(2)); 
 
     mask = double(alpha) / 255;
     mask = repmat(mask,[ 1 1 3 ]);
@@ -72,7 +72,7 @@ for i = 1:image_num
         dst_image_file = strrep(src_image_file, src_folder, dst_folder);
         dst_image_file = strrep(dst_image_file, '.png', '.jpg');
         [dst_image_file_folder, ~, ~] = fileparts(dst_image_file);
-        fprintf('the desfolder: %s\n', dst_image_file_folder);
+        % fprintf('the desfolder: %s\n', dst_image_file_folder);
         if ~exist(dst_image_file_folder, 'dir')
             mkdir(dst_image_file_folder);
         end
