@@ -36,6 +36,8 @@ for i = 1:image_num
     fh = s(1); fw = s(2);
     mask = double(alpha) / 255;
     mask = repmat(mask,1,1,3);
+
+    fprintf('%d %d\n', s(1), s(2)); 
     
     if rand() > clutteredBkgRatio
         I = uint8(double(I) .* mask + double(rand()*255) * (1 - mask));
