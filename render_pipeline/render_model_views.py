@@ -134,7 +134,7 @@ def obj_centened_camera_pos(dist, azimuth_deg, elevation_deg):
 
 # Input parameters
 shape_file = sys.argv[-5]
-shape_synset = sys.argv[-4]
+shape_synset = sys.argv[-4] 
 shape_md5 = sys.argv[-3]
 shape_view_params_file = sys.argv[-2]
 syn_images_folder = sys.argv[-1]
