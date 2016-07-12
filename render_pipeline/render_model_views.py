@@ -166,6 +166,15 @@ if 'Lamp' in list(bpy.data.objects.keys()):
     bpy.data.objects['Lamp'].select = True # remove default light
 bpy.ops.object.delete()
 
+
+# adding for depth (wxl)
+
+# tree = bpy.context.scene.node_tree
+# links = tree.links
+# for n in tree.nodes:
+#     tree.nodes.remove(n)
+
+
 # YOUR CODE START HERE
 
 for param in view_params:
