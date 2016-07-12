@@ -11,6 +11,11 @@ for i = 1 : numel(list)
     nowfile = [src '/' fname '/textured_meshes/optimized_tsdf_texture_mapped_mesh.obj'];
     desname = [src '/' fname '/textured_meshes/optimized_tsdf_texture_mapped_mesh2.obj'];
 
+
+    if exist(nowfile) == 0
+    	continue;
+    end
+
     fid = fopen(nowfile, 'r');
     fid2= fopen(desname, 'w'); 
 
