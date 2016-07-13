@@ -66,8 +66,8 @@ g_truncation_distribution_folder = os.path.join(g_data_folder, 'truncation_distr
 g_truncation_distribution_files = dict(zip(g_shape_synsets, [os.path.join(g_truncation_distribution_folder, name+'.txt') for name in g_shape_names]))
 
 # render_model_views
-g_syn_light_num_lowbound = 20
-g_syn_light_num_highbound = 30
+g_syn_light_num_lowbound = 25
+g_syn_light_num_highbound = 40
 g_syn_light_dist_lowbound = 8
 g_syn_light_dist_highbound = 20
 g_syn_light_azimuth_degree_lowbound = 0
