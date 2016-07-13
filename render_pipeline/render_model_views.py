@@ -189,7 +189,7 @@ for param in view_params:
 
     # set environment lighting
     #bpy.context.space_data.context = 'WORLD'
-    bpy.context.scene.world.light_settings.use_environment_light = True
+    bpy.context.scene.world.light_settings.use_environment_light = False
     bpy.context.scene.world.light_settings.environment_energy = np.random.uniform(g_syn_light_environment_energy_lowbound, g_syn_light_environment_energy_highbound)
     bpy.context.scene.world.light_settings.environment_color = 'PLAIN'
 
