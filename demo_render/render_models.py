@@ -9,6 +9,7 @@ from skimage.measure import regionprops
 modelsdir = '/nfs.yoda/xiaolonw/grasp/dataset/ycb/'
 modelslistfpath = '/nfs.yoda/xiaolonw/grasp/RenderForCNN/demo_render/list.txt'
 outdir = '/nfs.yoda/xiaolonw/grasp/dataset/ycb_rendered'
+outdir2 = '/nfs.yoda/xiaolonw/grasp/dataset/ycb_rendered_cropped'
 
 render_code = 'render_class_view.py'
 
@@ -30,7 +31,7 @@ def crop_center_tight(im, pad=10):
 
 # specify the outfpath if you want to store the file
 # else, the function will return the rendering
-def genRender(mpath, az, el, outfpath = None, render_dist = 0.5):
+def genRender(mpath, az, el, outfpath = None, outfpath2, render_dist = 0.5):
   SAVE_OUTPUT = True
   if not outfpath:
     SAVE_OUTPUT = False # only return the image
@@ -39,6 +40,11 @@ def genRender(mpath, az, el, outfpath = None, render_dist = 0.5):
   cmd = 'python %s -a %f -e %f -t 0.0 -d %f -m %s -o %s' % (render_code, 
       az, el, render_dist, mpath, outfpath)
   subprocess.call(cmd, shell=True)
+
+  I = plt.imread(outfpath)
+  plt.imsave(outfpath, I)
+
+
   if not SAVE_OUTPUT:
     I = plt.imread(outfpath)
     os.remove(outfpath)
@@ -56,14 +62,21 @@ if __name__ == '__main__':
     fname = fname[0: flen - 4]
     mpath = os.path.join(modelsdir,fname, 'textured_meshes/optimized_tsdf_texture_mapped_mesh2.obj')
     outfpath = os.path.join(outdir, fname)
+    outfpath2 = os.path.join(outdir2, fname)
     if not lock(outfpath):
       continue
     try:
       os.makedirs(outfpath)
     except:
       pass
+    try:
+      os.makedirs(outfpath2)
+    except:
+      pass
     for el in range(0, 360, 30):
       for az in range(0, 360, 30):
         for  light_id in range(3):
-          genRender(mpath, az, el, os.path.join(outfpath, str(az) + '_' + str(el) + '_' + str(light_id) + '.png'), render_dist=0.5)
+          nowoutpath = os.path.join(outfpath, str(az) + '_' + str(el) + '_' + str(light_id) + '.png')
+          nowoutpath2 = os.path.join(outfpath2, str(az) + '_' + str(el) + '_' + str(light_id) + '.png')
+          genRender(mpath, az, el, nowoutpath, nowoutpath2, render_dist=0.5)
     unlock(outfpath)
