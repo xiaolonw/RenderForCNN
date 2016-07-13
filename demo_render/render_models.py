@@ -31,7 +31,7 @@ def crop_center_tight(im, pad=10):
 
 # specify the outfpath if you want to store the file
 # else, the function will return the rendering
-def genRender(mpath, az, el, outfpath = None, outfpath2, render_dist = 0.5):
+def genRender(mpath, az, el, outfpath = None, outfpath2 = None, render_dist = 0.5):
   SAVE_OUTPUT = True
   if not outfpath:
     SAVE_OUTPUT = False # only return the image
