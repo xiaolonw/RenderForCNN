@@ -8,8 +8,8 @@ from skimage.measure import regionprops
 
 modelsdir = '/nfs.yoda/xiaolonw/grasp/dataset/ycb/'
 modelslistfpath = '/nfs.yoda/xiaolonw/grasp/RenderForCNN/demo_render/list.txt'
-outdir = '/nfs.yoda/xiaolonw/grasp/dataset/ycb_rendered'
-outdir2 = '/nfs.yoda/xiaolonw/grasp/dataset/ycb_rendered_cropped'
+outdir = '/nfs.yoda/xiaolonw/grasp/dataset/ycb_rendered2'
+outdir2 = '/nfs.yoda/xiaolonw/grasp/dataset/ycb_rendered_cropped2'
 
 render_code = 'render_class_view.py'
 
@@ -31,14 +31,14 @@ def crop_center_tight(im, pad=10):
 
 # specify the outfpath if you want to store the file
 # else, the function will return the rendering
-def genRender(mpath, az, el, outfpath = None, outfpath2 = None, render_dist = 0.5):
+def genRender(mpath, az, el, ti, outfpath = None, outfpath2 = None, render_dist = 0.5):
   SAVE_OUTPUT = True
   if not outfpath:
     SAVE_OUTPUT = False # only return the image
     (fid, outfpath) = tempfile.mkstemp()
     os.close(fid)
-  cmd = 'python %s -a %f -e %f -t 0.0 -d %f -m %s -o %s' % (render_code, 
-      az, el, render_dist, mpath, outfpath)
+  cmd = 'python %s -a %f -e %f -t %f -d %f -m %s -o %s' % (render_code, 
+      az, el, ti, render_dist, mpath, outfpath)
   subprocess.call(cmd, shell=True)
 
   I = plt.imread(outfpath)
@@ -74,10 +74,11 @@ if __name__ == '__main__':
       os.makedirs(outfpath2)
     except:
       pass
-    for el in range(0, 360, 30):
-      for az in range(0, 360, 30):
-        for  light_id in range(3):
-          nowoutpath = os.path.join(outfpath, str(az) + '_' + str(el) + '_' + str(light_id) + '.png')
-          nowoutpath2 = os.path.join(outfpath2, str(az) + '_' + str(el) + '_' + str(light_id) + '.png')
-          genRender(mpath, az, el, nowoutpath, nowoutpath2, render_dist=0.5)
+    for el in range(0, 360, 40):
+      for az in range(0, 360, 40):
+        for ti in range(0, 360, 40):
+          for  light_id in range(2):
+            nowoutpath = os.path.join(outfpath, str(az) + '_' + str(el) + '_' + str(ti) + '_' + str(light_id) + '.png')
+            nowoutpath2 = os.path.join(outfpath2, str(az) + '_' + str(el) + '_' + str(ti) + '_' + str(light_id) + '.png')
+            genRender(mpath, az, el, ti, nowoutpath, nowoutpath2, render_dist=0.5)
     unlock(outfpath)
