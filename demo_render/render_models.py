@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from skimage.measure import regionprops
 
-modelsdir = '/home/rgirdhar/Work/Data/016_3DModels/3D/3DModels/ShapeNet/Data/03001627'
-modelslistfpath = '/home/rgirdhar/Work/Data/016_3DModels/Lists/ShapeNet/03001627.txt'
-outdir = '/home/rgirdhar/Work/Data/016_3DModels/Scratch/0001_TrainingData/008_StanfordRenderLarge/snapshots'
+modelsdir = '/nfs.yoda/xiaolonw/grasp/dataset/ycb/'
+modelslistfpath = '/nfs.yoda/xiaolonw/grasp/RenderForCNN/demo_render/list.txt'
+outdir = '/nfs.yoda/xiaolonw/grasp/dataset/ycb_rendered'
 
-render_code = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../libs/RenderForCNN/demo_render/render_class_view.py')
+render_code = 'render_class_view.py'
 
 def crop_center(im):
   # image with alpha channel - remove white parts
@@ -30,7 +30,7 @@ def crop_center_tight(im, pad=10):
 
 # specify the outfpath if you want to store the file
 # else, the function will return the rendering
-def genRender(mpath, az, el, outfpath = None, render_dist = 3.0):
+def genRender(mpath, az, el, outfpath = None, render_dist = 0.5):
   SAVE_OUTPUT = True
   if not outfpath:
     SAVE_OUTPUT = False # only return the image
@@ -51,15 +51,18 @@ if __name__ == '__main__':
     modelslist = f.read().splitlines()
 
   for i in range(1, len(modelslist)):
-    mpath = os.path.join(modelsdir, modelslist[i - 1])
-    outfpath = os.path.join(outdir, str(i))
+    fname =  modelslist[i - 1]
+    flen = len(fname)
+    fname = fname[0: flen - 4]
+    mpath = os.path.join(modelsdir,fname, 'textured_meshes/optimized_tsdf_texture_mapped_mesh2.obj')
+    outfpath = os.path.join(outdir, fname)
     if not lock(outfpath):
       continue
     try:
       os.makedirs(outfpath)
     except:
       pass
-    for el in [30]:
-      for az in range(0, 360, 15):
-        genRender(mpath, az, el, os.path.join(outfpath, str(az) + '_' + str(el) + '.png'), render_dist=2.0)
+    for el in range(0, 360, 30):
+      for az in range(0, 360, 30):
+        genRender(mpath, az, el, os.path.join(outfpath, str(az) + '_' + str(el) + '.png'), render_dist=0.5)
     unlock(outfpath)
