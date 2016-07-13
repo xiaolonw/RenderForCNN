@@ -77,7 +77,7 @@ g_syn_light_elevation_degree_highbound = 90
 g_syn_light_energy_mean = 2
 g_syn_light_energy_std = 2
 g_syn_light_environment_energy_lowbound = 0
-g_syn_light_environment_energy_highbound = 1
+g_syn_light_environment_energy_highbound = 0.5
 
 # ------------------------------------------------------------
 # VIEW_ESTIMATION
