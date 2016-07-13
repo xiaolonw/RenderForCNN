@@ -62,8 +62,8 @@ if __name__ == '__main__':
       os.makedirs(outfpath)
     except:
       pass
-    for el in range(0, 360, 120):
-      for az in range(0, 360, 120):
+    for el in range(0, 360, 30):
+      for az in range(0, 360, 30):
         for  light_id in range(3):
           genRender(mpath, az, el, os.path.join(outfpath, str(az) + '_' + str(el) + '_' + str(light_id) + '.png'), render_dist=0.5)
     unlock(outfpath)
