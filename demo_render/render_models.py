@@ -45,7 +45,7 @@ def genRender(mpath, az, el, outfpath = None, render_dist = 0.5):
     return I
 
 if __name__ == '__main__':
-  sys.path.append('../utils/python')
+  sys.path.append('./python')
   from locker import lock, unlock
   with open(modelslistfpath) as f:
     modelslist = f.read().splitlines()
