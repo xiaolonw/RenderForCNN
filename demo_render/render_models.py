@@ -42,7 +42,8 @@ def genRender(mpath, az, el, outfpath = None, outfpath2 = None, render_dist = 0.
   subprocess.call(cmd, shell=True)
 
   I = plt.imread(outfpath)
-  plt.imsave(outfpath, I)
+  I = crop_center_tight(I) 
+  plt.imsave(outfpath2, I)
 
 
   if not SAVE_OUTPUT:
