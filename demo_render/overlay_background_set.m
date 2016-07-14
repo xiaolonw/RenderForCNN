@@ -64,13 +64,15 @@ for i = 1 : numel(backnames)
 	width  = size(im, 2); 
 	maxlen = max([height, width]); 
 
-	if mod(i, 100) == 0
-		fprintf(' %d %d\n', sample_num, i);
-	end
-
 	for j = 1 : image_num
 		im2 = im; 
 		clssids = randperm(clasnum);
+
+
+		if mod(j, 100) == 0
+			fprintf(' %d %d\n', sample_num, j);
+		end
+
 
 		txtfile = sprintf('%s/%06d_%06d.txt', output_annot, sample_num,  j);
 		fid2 = fopen(txtfile, 'w'); 
