@@ -6,11 +6,12 @@
 
 fore_src = '/nfs.yoda/xiaolonw/grasp/dataset/ycb_rendered_cropped2/';
 back_src = '/nfs.yoda/xiaolonw/grasp/dataset/background/';
-output_src = '/nfs.yoda/xiaolonw/grasp/dataset/combine/'; 
-output_annot = '/nfs.yoda/xiaolonw/grasp/dataset/annotations/'; 
+output_src = '/nfs.yoda/xiaolonw/grasp/dataset/combine_gray/'; 
+output_annot = '/nfs.yoda/xiaolonw/grasp/dataset/annotations_gray/'; 
+output_seg = '/nfs.yoda/xiaolonw/grasp/dataset/segment_gray/'; 
 classnames = '/nfs.yoda/xiaolonw/grasp/dataset/classtxt.txt'; 
 
-
+namelist = '/nfs.yoda/xiaolonw/grasp/dataset/namelist.txt'
 
 fore_list = {};
 back_list = {};
@@ -38,8 +39,10 @@ for i = 1 : numel(forenames)
 end
 fclose(fid); 
 
+fidname = fopen(namelist, 'w');
 
-backnames = dir([back_src '/*.png']); 
+
+backnames = dir([back_src '/*.jpg']); 
 for i = 1 : numel(backnames)
 	back_list{end + 1} = backnames(i).name; 
 end
@@ -54,6 +57,13 @@ obj_upperbound = 4;
 % 2.5 - 5
 
 for sample_num = 1 : 10
+
+tempfolder = sprintf('%s/%d', output_annot, sample_num);
+mkdir(tempfolder);
+tempfolder = sprintf('%s/%d', output_src, sample_num);
+mkdir(tempfolder);
+tempfolder = sprintf('%s/%d', output_seg, sample_num);
+mkdir(tempfolder);
 
 for i = 1 : numel(backnames)
 
@@ -74,8 +84,10 @@ for i = 1 : numel(backnames)
 		end
 
 
-		txtfile = sprintf('%s/%06d_%06d.txt', output_annot, sample_num,  j);
+		txtfile = sprintf('%s/%d/%06d.txt', output_annot, sample_num, j);
 		fid2 = fopen(txtfile, 'w'); 
+
+		ccnow = 0;
 
 		for k = 1 : sample_num
 			classid = clssids(k);
@@ -116,11 +128,22 @@ for i = 1 : numel(backnames)
         	im2 (ypos: ypos + ins_height - 1, xpos: xpos + ins_width - 1, : ) = uint8(double(imfore2) .* mask + double(im2 (ypos: ypos + ins_height - 1, xpos: xpos + ins_width - 1, : )) .* (1 - mask)); 
 
         	fprintf(fid2, '%d %d %d %d %d\n', classid, xpos, xpos + ins_width - 1, ypos, ypos + ins_height - 1 );
+        	
+        	mask2 = mask;
+        	mask2 = mask2 * 255;
+        	mask2 = uint8(mask2); 
+
+        	ccnow = ccnow + 1;
+
+			imwrite(mask2, sprintf('%s/%d/%06d_%d.jpg', output_seg, sample_num,  j, ccnow));
+
+
 
 		end
-		imwrite(im2, sprintf('%s/%06d_%06d.jpg', output_src, sample_num,  j));
-
+		imwrite(im2, sprintf('%s/%d/%06d.jpg', output_src, sample_num,  j));
 		fclose(fid2); 
+
+		fprintf(fidname, '%d/%06d\n', sample_num, j);
 
 	end
 
@@ -133,7 +156,7 @@ end
 
 
 
-
+fclose(fidname);
 
 
 
