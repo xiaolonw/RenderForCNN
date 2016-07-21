@@ -52,7 +52,7 @@ image_num = 2000;
 margin = 100;
 clasnum = numel(fore_list);
 obj_lowerbound = 2.5;
-obj_upperbound = 4; 
+obj_upperbound = 5; 
 
 % 2.5 - 5
 
